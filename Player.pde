@@ -6,7 +6,7 @@ class Player{
   int xpos;
   int ypos;
   
-  PImage sprite;
+  //PImage sprite;
   
   Player(){
     xpos = width/2;
@@ -14,7 +14,7 @@ class Player{
     lives = 3;
     bullet = new Projectile(-1, xpos, 30, -1);
     
-    sprite = loadImage("player.gif");
+    //sprite = loadImage("player.gif");
     
     
   }

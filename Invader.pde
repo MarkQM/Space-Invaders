@@ -4,12 +4,12 @@ class Invader{
   int dirc;
   int size;
   
-  PImage sprite0 = loadImage("invader0.gif");
-  PImage sprite1 = loadImage("invader1.gif");
+  PImage sprite0 = loadImage("invader0.png");
+  PImage sprite1 = loadImage("invader1.png");
   PImage sprite2 = loadImage("invader2.png");
-  PImage sprite3;
-  PImage sprite4;
-  PImage sprite5;
+  PImage sprite3 = loadImage("invader3.png");
+  PImage sprite4 = loadImage("invader4.png");
+  PImage sprite5 = loadImage("invader5.png");
 
   
   float aggression;
@@ -23,6 +23,10 @@ class Invader{
   
   
   Invader(int type, int xpos, int ypos){
+    
+    if(type > 5){
+      type = 5;
+    }
     
     this.xpos = xpos;
     this.ypos = ypos;
@@ -110,10 +114,10 @@ class Invader{
   
   void display(){
     if(active){
-      //image(sprite, xpos, ypos);
-      fill(80,0,0);
-      rect(xpos-(size/2), ypos-12, size, 24);
-      fill(100);
+      image(sprite, xpos, ypos);
+      //fill(80,0,0);
+      //rect(xpos-(size/2), ypos-12, size, 24);
+      //fill(100);
       
     }
   }

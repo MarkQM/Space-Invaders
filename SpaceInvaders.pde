@@ -9,6 +9,7 @@ int menuSelect;
 
 int gameState;
 
+boolean gameStart;
 boolean advancePhase;
 
 PImage menu;
@@ -17,23 +18,18 @@ PImage overScreen;
 void setup(){
   size(800,600);
   
-  //menu = loadImage("menu.png");
-  //overScreen = loadImage("gameOver.png");
+  menu = loadImage("menu.png");
+  overScreen = loadImage("gameOver.png");
   
   score = 0;
   level = 0;
   timeCounter = 0;
   menuSelect = 0;
   
-  gameState = 1;
+  gameState = 0;
+  gameStart = false;
   advancePhase = false;
-  
-  invaderArray = new Invader[55];
-  coverArray = new Cover[25];
-  player1 = new Player();
-  
-  initializeCover();
-  initializeInvaders();
+
 }
 
 
@@ -44,8 +40,20 @@ void draw(){
     
     case 0:
       drawMenu();
+      gameStart = false;
+      break;
     
     case 1:
+    
+      if(gameStart == false){
+        initializeGame();
+        gameStart = true;
+      }
+      
+      fill(255);
+      textSize(20);
+      text("Lives: " + player1.lives,0,30);
+      
       manageInvaderInteraction();
       managePlayer();
     
@@ -57,6 +65,16 @@ void draw(){
     case 2:
       gameOver();
   }
+}
+
+void initializeGame(){
+    System.gc();
+    invaderArray = new Invader[55];
+    coverArray = new Cover[25];
+    player1 = new Player();    
+        
+    initializeCover();
+    initializeInvaders();
 }
 
 void manageInvaderInteraction(){
@@ -235,7 +253,7 @@ void nextLevel(){
 }
 
 void checkGameOver(){
-  if(player1.lives < 1){
+  if(player1.lives < 1 || level > 7){
    gameState = 2; 
   }
 }
@@ -248,7 +266,9 @@ void drawMenu(){
 
 void gameOver(){
   image(overScreen, 0, 0);
-  text("Score: " + score, width/2, height/2);
+  textSize(32);
+  fill(255);
+  text("Score: " + score, width/2-100, height/2);
 }
 
 void keyPressed(){
@@ -258,6 +278,15 @@ void keyPressed(){
       if(key == ' ' || keyCode == ENTER){
         gameState = 1;
       }
+      
+      if(key == '+' && level < 7){
+        level++;
+      }
+      
+      if(key == '-' && level > 0){
+        level--; 
+      }
+      
       break;
     
     case 1:
